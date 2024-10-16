@@ -18,8 +18,8 @@ export class ProductsService {
     return this.productsRepository.findOne({ where: { id } });
   }
 
-  async createProduct(name: string, price: number): Promise<Product> {
-    const newProduct = this.productsRepository.create({ name, price });
+  async createProduct(product: Product): Promise<Product> {
+    const newProduct = this.productsRepository.create(product);
     return this.productsRepository.save(newProduct);
   }
 }

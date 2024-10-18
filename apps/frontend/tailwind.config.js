@@ -10,6 +10,7 @@ export default {
       'secondary': '#2D7575',
       'white': '#FFFFFF',
       'light-gray': '#ccc',
+      'medium-gray': '#eaeaea',
       'error': '#cc0000',
     },
     extend: {},

@@ -9,7 +9,8 @@ export default {
       'primary': '#f7f7f7',
       'secondary': '#2D7575',
       'white': '#FFFFFF',
-      'light-gray': '#ccc'
+      'light-gray': '#ccc',
+      'error': '#cc0000',
     },
     extend: {},
   },

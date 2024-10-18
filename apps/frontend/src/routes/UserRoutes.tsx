@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Header from '../components/shared/Header';
+import ProductPage from '../pages/Login/ProductPage';
 
 const UserRoutes: React.FC = () => (
     <Routes>
-      <Route path="/home" element={<Header />} />
+      <Route path="/home" element={<ProductPage />} />
     </Routes>
   );
   

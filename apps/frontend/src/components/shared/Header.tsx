@@ -7,7 +7,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 const Header = () => {
     return (
-        <header className="sticky top-0 z-20 bg-white border-b border-light-gray h-24">
+        <header className="sticky top-0 z-20 bg-primary border-b border-light-gray h-24">
             <div className="flex items-center justify-between h-full">
                 <div className="flex items-center ml-5">
                     <button className='pr-10'>
@@ -17,7 +17,7 @@ const Header = () => {
                 </div>
 
                 <nav className="flex h-full">
-                    <div className="flex items-center h-full hover:bg-primary px-5">
+                    <div className="flex items-center h-full hover:bg-[#f8f8f8] px-5">
                         <HelpOutlineOutlinedIcon className='mr-2'/>
                         <a href="#">Suporte</a>
                     </div>

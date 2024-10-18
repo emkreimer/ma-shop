@@ -6,10 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import type { ProductTableProps } from '../../services/productService';
+import ProductDialog from './ProductDialog';
+import ProductDeleteDialog from './ProductDeleteDialog';
+import Product from '../../models/Product';
 
+interface ProductTableProps {
+  products: Product[]; 
+}
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     return (
       <TableContainer component={Paper}>
@@ -30,15 +33,15 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 key={p.id}
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="left">{p.dateCreated.toLocaleDateString()}</TableCell>
+                <TableCell align="left">{p.dateCreated}</TableCell>
                 <TableCell align="left">{p.name}</TableCell>
                 <TableCell align="left">{p.price}</TableCell>
-                <TableCell align="left">{p.quantity ? p.quantity : 0}</TableCell>
+                <TableCell align="left">{p.quantity ? p.quantity : 1}</TableCell>
                 <TableCell align="left">R$ {p.quantity ? p.quantity * p.price : p.price}</TableCell>
                 <TableCell align="left">
                     <div className='flex flex-row gap-x-3'>
-                      <button><DeleteOutlineOutlinedIcon color='error'/></button>
-                      <button><SettingsOutlinedIcon /></button>            
+                      <ProductDialog p={p}/>
+                      <ProductDeleteDialog p={p}/>          
                     </div>
                 </TableCell>
 

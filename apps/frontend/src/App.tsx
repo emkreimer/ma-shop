@@ -1,12 +1,13 @@
 
 import './App.css'
-import { SignInForm } from './modules/auth/components/SignInForm'
+import { BrowserRouter as Router } from 'react-router-dom';
+import AuthRoutes from './routes/AuthRoutes';
 
 function App() {
-
-  return (
-    <SignInForm/>
-
+   return (
+    <Router>
+      <AuthRoutes />
+    </Router>
   )
 }
 

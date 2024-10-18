@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../models/users/users.service';
 import { User } from '../models/users/user.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -11,21 +11,20 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
+  async validateUser(username: string, pass: string): Promise<boolean> {
     const user = await this.usersService.findOne(username);
     if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result;
+      //const { password, ...result } = user;
+      return true;
     }
-    return null;
+    return false;
   }
 
   async logIn(user: User) {
     if (this.validateUser(user.username, user.password)) {
-      return {
-        access_token: this.jwtService.sign({ user }),
-      };
+      return { access_token: this.jwtService.sign({ user }) };
+    } else {
+      throw new UnauthorizedException('Usuário ou senha inválidos.');
     }
-    return null;
   }
 }

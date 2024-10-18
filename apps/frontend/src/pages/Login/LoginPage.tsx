@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { login } from '../../services/authService';
-// import { logo } from '../../assets/logo-txai.svg'
+import logo from '../../assets/logo.svg'
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
             <div className="flex-1 bg-secondary text-white flex flex-col text-center m-0 p-14">
                 <h1 className="text-4xl">Bem-vindo!</h1>
                 <h2 className="text-3xl my-5 pb-10">SISTEMA GERENCIAL TXAI</h2>
-                {/* <img src={logo} alt="Logo" /> */}
+                <img src={logo} alt="Logo" />
             </div>
             <div className="flex-1 flex-col bg-primary flex justify-center items-center p-1 m-0">
                 <form  onSubmit={handleSubmit} className="w-full max-w-md bg-primary p-5">

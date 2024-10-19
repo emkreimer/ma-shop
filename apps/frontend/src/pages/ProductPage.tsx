@@ -1,10 +1,18 @@
+import React, { useEffect, useState } from 'react';
 import Header from "../components/shared/Header";
 import ProductTable from "../components/product/ProductTable";
 import ProductDialog from "../components/product/ProductDialog";
-import { mockProducts } from "../services/productService";
+import Product from "../models/Product";
 
 const ProductPage: React.FC = () => {
-    //const
+    const [products, setProducts] = useState<Product[]>([]);
+    useEffect(() => {
+        fetch('/api/product')
+          .then((response) => response.json())
+          .then((data) => setProducts(data))
+          .catch(() => alert('Vixe! Deu erro!'));
+      }, []);
+
     return (
         <div className="bg-primary flex flex-col h-screen bg-primary">
             <Header />
@@ -13,11 +21,8 @@ const ProductPage: React.FC = () => {
                 <h1 className="ml-4 text-2xl text-secondary font-bold">Controle de Estoque</h1>    
                 <ProductDialog p={null}/>   
             </div>
-            <ProductTable products={mockProducts} />        
+            <ProductTable products={products} />        
         </div>
-            
-        
-        
     )
 }
  export default ProductPage;

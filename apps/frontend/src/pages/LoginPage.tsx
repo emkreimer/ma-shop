@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate} from 'react-router-dom';
 import { login } from '../services/authService';
-import logo from '../../assets/logo.svg'
+import { useAuth } from '../context/AuthContext';
+import logo from '../assets/logo.svg'
 
 const LoginPage: React.FC = () => {
+    const { setToken } = useAuth();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -12,8 +14,9 @@ const LoginPage: React.FC = () => {
       event.preventDefault();
   
       try {
-        const { token } = await login(username, password);
-        localStorage.setItem('token', token);
+        const token = await login(username, password);
+        setToken(token);
+        //localStorage.setItem('token', token);
         navigate('/index');
       } catch (error) {
         alert('Falha ;/');

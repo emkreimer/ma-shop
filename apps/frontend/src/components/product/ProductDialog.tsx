@@ -1,7 +1,7 @@
 import { useState, Fragment } from 'react';
 import { DialogTitle, Dialog, Divider, DialogContent } from '@mui/material';
 import ProductButton from './ProductButton';
-import { newProduct } from '../../services/productService';
+import { newProduct, updateProduct, createProduct } from '../../services/productService';
 import Product from '../../models/Product';
 
 interface ProductDialogProps {
@@ -28,6 +28,15 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     }))  
   };
 
+const handleSubmit = async () => {
+    if (p) {
+        await updateProduct(product);
+    } else {
+        await createProduct(product);
+    }
+    setOpen(false);
+};
+
     return (
         <Fragment>
             <ProductButton edicao={!!p} onClick={handleClickOpen}/>
@@ -47,6 +56,7 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         <label className='block mb-2'>Data de cadastro</label>
                         <input
                             type="date"
+                            name="dateCreated"
                             value={product.dateCreated}
                             onChange={handleProductChange}
                             className="border px-3 py-1 rounded border-light-gray"
@@ -61,12 +71,14 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                     <div className='flex flex-row'>
                         <input 
                             type="text" 
+                            name="name"
                             value={product.name}
                             onChange={handleProductChange}
                             className="border p-1 mr-14 rounded border-light-gray"
                         />
                         <input 
                             type="number"
+                            name="quantity"
                             value={product.quantity ? product.quantity : 1}
                             onChange={handleProductChange}
                             className="w-20 border p-1 rounded border-light-gray"
@@ -76,6 +88,7 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         <label className="block mb-2">Valor</label>
                         <input 
                             type="text" 
+                            name='price'
                             value={product.price}
                             onChange={handleProductChange}
                             className="border p-1 mr-14 rounded border-light-gray"
@@ -88,9 +101,9 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                             Cancelar
                         </button>
                         <button 
-                            
+                            onClick={handleSubmit}                          
                             className='ml-3 rounded p-2 bg-secondary opacity-90 hover:opacity-100 text-white'>
-                            Cadastrar
+                            {p ? 'Salvar' : 'Cadastrar'}
                         </button>
                     </div>
                 </DialogContent>

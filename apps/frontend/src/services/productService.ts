@@ -1,10 +1,32 @@
 import Product from "../models/Product";
 
 const newProduct: Product = {
-  id: 0,
+  id: null,
   dateCreated: new Date().toLocaleDateString(),
   name: "",
   price: 0.0,
+};
+
+const createProduct = async (product: Product): Promise<Product> => {
+  const response = await fetch("/api/product", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+  return response.json();
+};
+
+const updateProduct = async (product: Product): Promise<Product> => {
+  const response = await fetch(`/api/product/${product.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+  return response.json();
 };
 
 // const fetchProducts = async (): Promise<Product[]> => {
@@ -16,25 +38,4 @@ const newProduct: Product = {
 //   });
 // }
 
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    dateCreated: new Date().toLocaleDateString(),
-    name: "test",
-    price: 10.0,
-  },
-  {
-    id: 2,
-    dateCreated: new Date().toLocaleDateString(),
-    name: "test",
-    price: 10.0,
-  },
-  {
-    id: 3,
-    dateCreated: new Date().toLocaleDateString(),
-    name: "test",
-    price: 10.0,
-  },
-];
-
-export { mockProducts, newProduct };
+export { newProduct, createProduct, updateProduct };

@@ -33,7 +33,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 key={p.id}
                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="left">{p.dateCreated}</TableCell>
+                <TableCell align="left">{p.dateCreated ? p.dateCreated : 'Nenhuma data'}</TableCell>
                 <TableCell align="left">{p.name}</TableCell>
                 <TableCell align="left">{p.price}</TableCell>
                 <TableCell align="left">{p.quantity ? p.quantity : 1}</TableCell>

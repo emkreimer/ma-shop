@@ -31,4 +31,10 @@ export class ProductsService {
     const newProduct = this.productsRepository.create(product);
     return this.productsRepository.save(newProduct);
   }
+
+  async updateProduct(p: Product): Promise<Product> {
+    let product = await this.findOne(p.id);
+    product = { ...product, ...p };
+    return this.productsRepository.save(product);
+  }
 }

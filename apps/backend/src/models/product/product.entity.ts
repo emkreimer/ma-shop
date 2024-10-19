@@ -9,6 +9,9 @@ export class Product {
   @Column()
   name: string;
 
+  @Column()
+  dateCreated: string;
+
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 

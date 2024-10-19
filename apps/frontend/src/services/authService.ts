@@ -7,6 +7,7 @@ const login = async (username: string, password: string) => {
     body: JSON.stringify({ username, password }),
   });
 
+  console.log(response);
   if (response.ok) {
     return response.json();
   } else {

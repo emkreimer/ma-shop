@@ -45,6 +45,7 @@ export class UsersService {
 
   async validateNewUser(username: string): Promise<boolean> {
     const user = await this.findOne(username);
+    console.log(user === undefined);
     return user === undefined;
   }
 }

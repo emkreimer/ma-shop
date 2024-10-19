@@ -7,6 +7,15 @@ const newProduct: Product = {
   price: 0.0,
 };
 
+// const fetchProducts = async (): Promise<Product[]> => {
+//   const response = await fetch("/api/products", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+// }
+
 const mockProducts: Product[] = [
   {
     id: 1,

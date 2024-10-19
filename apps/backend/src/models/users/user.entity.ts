@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from '../product/product.entity';
+import { Role } from 'src/config/roles/roles.enum';
 
 @Entity()
 export class User {
@@ -10,4 +12,10 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ type: 'enum', enum: Role, default: Role.COMUM })
+  role: Role;
+
+  @OneToMany(() => Product, (product) => product.owner)
+  products: Product[];
 }

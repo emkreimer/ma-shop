@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../models/users/users.service';
 import { User } from '../models/users/user.entity';
+//import { ProductsService } from 'src/models/product/product.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
@@ -14,17 +15,23 @@ export class AuthService {
   async validateUser(username: string, pass: string): Promise<boolean> {
     const user = await this.usersService.findOne(username);
     if (user && (await bcrypt.compare(pass, user.password))) {
-      //const { password, ...result } = user;
       return true;
     }
     return false;
   }
 
+  // async validateUserPermissions(user: User): Promise<Product[]> {
+  //   return await this.productsService.findOwnedProducts(user);
+  // }
+
   async logIn(user: User) {
-    if (this.validateUser(user.username, user.password)) {
-      return { access_token: this.jwtService.sign({ user }) };
+    const isValid = await this.validateUser(user.username, user.password);
+    if (isValid) {
+      return {
+        access_token: this.jwtService.sign({ user }),
+      };
     } else {
-      throw new UnauthorizedException('Usuário ou senha inválidos.');
+      throw new UnauthorizedException('Usuário ou senha inválidos!');
     }
   }
 }

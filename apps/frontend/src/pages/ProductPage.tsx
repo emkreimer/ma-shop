@@ -1,9 +1,10 @@
-import Header from "../../components/shared/Header";
-import ProductTable from "../../components/product/ProductTable";
-import ProductDialog from "../../components/product/ProductDialog";
-import { mockProducts } from "../../services/productService";
+import Header from "../components/shared/Header";
+import ProductTable from "../components/product/ProductTable";
+import ProductDialog from "../components/product/ProductDialog";
+import { mockProducts } from "../services/productService";
 
 const ProductPage: React.FC = () => {
+    //const
     return (
         <div className="bg-primary flex flex-col h-screen bg-primary">
             <Header />

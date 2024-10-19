@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../users/user.entity';
 import { Product } from './product.entity';
 
 @Injectable()
@@ -10,12 +11,20 @@ export class ProductsService {
     private productsRepository: Repository<Product>,
   ) {}
 
-  findAll(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     return this.productsRepository.find();
   }
 
-  findOne(id: number): Promise<Product> {
+  async findOne(id: number): Promise<Product> {
     return this.productsRepository.findOne({ where: { id } });
+  }
+
+  async findOwnedProducts(user: User): Promise<Product[]> {
+    if (user.role === 'admin') {
+      return this.productsRepository.find();
+    } else {
+      return this.productsRepository.find({ where: { owner: user } });
+    }
   }
 
   async createProduct(product: Product): Promise<Product> {

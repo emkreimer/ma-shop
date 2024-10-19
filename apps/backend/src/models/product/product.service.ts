@@ -37,4 +37,10 @@ export class ProductsService {
     product = { ...product, ...p };
     return this.productsRepository.save(product);
   }
+
+  async deleteProduct(id: number): Promise<void> {
+    const product = await this.findOne(id);
+    product.deleted = true;
+    this.productsRepository.save(product);
+  }
 }

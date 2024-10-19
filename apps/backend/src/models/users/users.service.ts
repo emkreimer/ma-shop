@@ -4,8 +4,6 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcryptjs';
 
-//import { UserDto } from './dto/user.dto';
-
 @Injectable()
 export class UsersService {
   saltOrRounds: number = 10;
@@ -24,8 +22,29 @@ export class UsersService {
   }
 
   async createUser(user: User): Promise<User> {
-    user.password = await bcrypt.hash(user.password, this.saltOrRounds);
-    const newUser = this.usersRepository.create(user);
-    return this.usersRepository.save(newUser);
+    if (await this.validateNewUser(user.username)) {
+      user.password = await bcrypt.hash(user.password, this.saltOrRounds);
+      const newUser = this.usersRepository.create(user);
+      return this.usersRepository.save(newUser);
+    } else {
+      throw new Error('Esse usuário já existe!');
+    }
+  }
+
+  async updateUser(user: User): Promise<User> {
+    let u = await this.findOne(user.username);
+    u = { ...u, ...user };
+    return this.usersRepository.save(u);
+  }
+
+  async deleteUser(username: string): Promise<void> {
+    const user = await this.findOne(username);
+    user.deleted = true;
+    this.usersRepository.save(user);
+  }
+
+  async validateNewUser(username: string): Promise<boolean> {
+    const user = await this.findOne(username);
+    return user === undefined;
   }
 }

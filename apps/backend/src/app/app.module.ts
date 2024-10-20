@@ -21,7 +21,7 @@ import { ProductModule } from 'src/models/product/product.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres',
         host: configService.get('TYPEORM_HOST'),
         port: parseInt(configService.get('TYPEORM_PORT'), 10),
         username: configService.get('TYPEORM_USERNAME'),

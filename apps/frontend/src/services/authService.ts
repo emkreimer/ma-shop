@@ -2,6 +2,11 @@ import { jwtDecode, JwtPayload } from "jwt-decode"; // Import JwtPayload type
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+interface CustomJwtPayload extends JwtPayload {
+  role: string;
+  username: string;
+}
+
 const login = async (username: string, password: string) => {
   const response = await fetch(`${apiUrl}/auth/login`, {
     method: "POST",
@@ -15,7 +20,7 @@ const login = async (username: string, password: string) => {
     const data = await response.json();
     const access_token = data.access_token;
 
-    const decodedToken: JwtPayload = jwtDecode(access_token);
+    const decodedToken: CustomJwtPayload = jwtDecode(access_token);
     const userRole = decodedToken.role;
 
     localStorage.setItem("token", access_token);

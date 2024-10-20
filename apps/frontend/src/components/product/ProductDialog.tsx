@@ -30,8 +30,13 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
 
 const handleSubmit = async () => {
-    p ? await updateProduct(product) : await createProduct(product);
-    setOpen(false);
+    if (p) {
+        await updateProduct(product);
+    } else {
+        await createProduct(product);
+    }
+    handleClose();
+    window.location.reload();
 };
 
     return (

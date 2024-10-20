@@ -26,6 +26,15 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     setProductsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
+
+  const formatDate = (date: string) => {
+    if (date.charAt(4) === '-') {
+      date = date.replace(/-/g, '/');
+      return date.split('/').reverse().join('/');
+    }
+    return date;
+   
+  }
     return (
       <>
        <TablePagination
@@ -55,7 +64,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
               <TableRow
                 key={p.id}
               >
-                <TableCell align="left">{p.dateCreated ? p.dateCreated : 'Nenhuma data'}</TableCell>
+                <TableCell align="left">{p.dateCreated ? formatDate(p.dateCreated) : 'Nenhuma data'}</TableCell>
                 <TableCell align="left">{p.name}</TableCell>
                 <TableCell align="left">R$ {p.price}</TableCell>
                 <TableCell align="left">{p.quantity ? p.quantity : 1}</TableCell>

@@ -11,9 +11,9 @@ const newProduct: Product = {
   isEditable: true,
 };
 
-const createProduct = async (product: Product): Promise<Product | null> => {
+const createProduct = async (product: Product): Promise<void> => {
   if (validateProduct(product)) {
-    const response = await fetch(`${apiUrl}/product`, {
+    await fetch(`${apiUrl}/product`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,15 +21,14 @@ const createProduct = async (product: Product): Promise<Product | null> => {
       },
       body: JSON.stringify(product),
     });
-    return response.json();
+    window.location.reload();
   } else {
     alert("Preencha todos os campos");
-    return null;
   }
 };
 
-const updateProduct = async (product: Product): Promise<Product> => {
-  const response = await fetch(`${apiUrl}/product/${product.id}`, {
+const updateProduct = async (product: Product): Promise<void> => {
+  await fetch(`${apiUrl}/product/${product.id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -37,7 +36,7 @@ const updateProduct = async (product: Product): Promise<Product> => {
     },
     body: JSON.stringify(product),
   });
-  return response.json();
+  window.location.reload();
 };
 
 const deleteProduct = async (id: number): Promise<void> => {

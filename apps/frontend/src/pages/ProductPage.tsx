@@ -32,7 +32,7 @@ const ProductPage: React.FC = () => {
             <br></br>
             <div className="h-32">
                 <h1 className="ml-4 text-2xl text-secondary font-bold">Controle de Estoque</h1>    
-                <ProductDialog p={null}/>   
+                <ProductDialog p={null} permissao={true}/>   
             </div>
             <ProductTable products={products} />        
         </div>

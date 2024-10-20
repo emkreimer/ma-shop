@@ -32,12 +32,12 @@ const LoginPage: React.FC = () => {
             <div className="flex-1 flex-col bg-primary flex justify-center items-center p-1 m-0">
                 <form  onSubmit={handleSubmit} className="w-full max-w-md bg-primary p-5">
                     <h3 className="text-3xl font-bold mb-8">Login</h3>
-                    <label className="block mb-2">CPF</label>
+                    <label className="block mb-2">Usuário</label>
                     <input 
                         type="text" 
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Insira seu CPF, somente os números" 
+                        placeholder="Insira seu nome de usuário" 
                         className="w-full border mb-8 p-2.5 rounded border-solid border-light-gray"/>
 
                     <label className="block mb-2">Senha</label>

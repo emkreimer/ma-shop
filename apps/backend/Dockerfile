@@ -1,15 +1,19 @@
 FROM node:16-alpine
 
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-COPY ./apps/backend/package*.json ./
+# Copy the package.json and package-lock.json first
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
-COPY ./apps/backend ./
+# Copy the rest of the app's source code
+COPY . .
 
-RUN npm run build
-
+# Expose the port
 EXPOSE 3000
 
-CMD ["npm", "run", "start:prod"]
+# Start the application
+CMD ["npm", "start"]

@@ -22,6 +22,7 @@ const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p, permissao}) => {
     const handleDelete =  async () => {
         permissao ? deleteProduct(p.id) : alert('Você não tem permissão!');
         handleClose();
+        window.location.reload();
     }
 
     return (

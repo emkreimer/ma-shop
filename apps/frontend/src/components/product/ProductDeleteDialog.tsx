@@ -1,7 +1,8 @@
 import { useState, Fragment } from 'react';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { DialogTitle, Dialog, DialogContent } from '@mui/material';
+import { DialogTitle, Dialog, DialogContent, Tooltip } from '@mui/material';
 import Product from '../../models/Product';
+import { deleteProduct } from '../../services/productService';
 
 interface ProductDialogProps {
     p: Product;
@@ -9,7 +10,6 @@ interface ProductDialogProps {
   }
 
 const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p, permissao}) => {
-    const [product, setProduct] = useState<Product>(p)
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -19,28 +19,38 @@ const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p, permissao}) => {
         setOpen(false);
     };
 
+    const handleDelete =  async () => {
+        permissao ? deleteProduct(p.id) : alert('Você não tem permissão!');
+        handleClose();
+    }
+
     return (
         <Fragment>
-            <button onClick={handleClickOpen} disabled={!permissao}>
-                <DeleteOutlineIcon color='error' />
-            </button>
+            <Tooltip title={permissao ? 'Deletar' : 'Sem permissão'}>
+                <button onClick={handleClickOpen} disabled={!permissao}>
+                    <DeleteOutlineIcon color='error' />
+                </button>
+            </Tooltip>
+           
             <Dialog 
                 open={open}
                 onClose={handleClose}
                 >
                 <DialogTitle sx={{backgroundColor: '#f7f7f7'}}>
-                    <div className='rounded-full bg-white items-center p-3' >
-                        <DeleteOutlineIcon sx={{fontSize: 34}} color='error'/>
-                    </div>
+                    Tem certeza de que deseja excluir o produto {p.name}?
                 </DialogTitle>
                 
                 <DialogContent sx={{backgroundColor: '#f7f7f7'}}>         
-                    <div className='flex flex-row justify-center mt-10'>
-                        <button className='ml-3 rounded p-2 bg-primary hover:bg-light-gray'>Cancelar</button>
+                    <div className='flex flex-row justify-end mt-10'>
                         <button 
                             onClick={handleClose}
-                            className='ml-3 rounded p-2 bg-secondary opacity-90 hover:opacity-100 text-white'>
-                            Cadastrar
+                            className='ml-3 rounded p-2 bg-primary hover:bg-light-gray'>
+                                Cancelar
+                        </button>
+                        <button 
+                            onClick={handleDelete}
+                            className='ml-3 rounded p-2 bg-error opacity-90 hover:opacity-100 text-white'>
+                            Excluir
                         </button>
                     </div>
                 </DialogContent>

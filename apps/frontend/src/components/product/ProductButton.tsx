@@ -1,5 +1,5 @@
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-
+import { Tooltip } from '@mui/material';
 
 interface ProductButtonProps {
     edicao: boolean;
@@ -10,9 +10,13 @@ interface ProductButtonProps {
 const ProductButton: React.FC<ProductButtonProps> = ({ edicao, permissao, onClick }) => {
     if (edicao) {
         return (
-            <button onClick={onClick} disabled={!permissao}>
-                <SettingsOutlinedIcon />
-            </button>            
+            <Tooltip title={permissao ? 'Editar' : 'Sem permissão'}>
+                <button onClick={onClick} disabled={!permissao}>
+                <SettingsOutlinedIcon/>
+            </button>    
+            </Tooltip>
+
+                    
         );
     } else {
         return (

@@ -10,7 +10,6 @@ interface ProductTableProps {
 }
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
   const permissao = localStorage.getItem('permissao');
-  console.log(permissao);
   const [page, setPage] = React.useState(0);
   const [productsPerPage, setProductsPerPage] = React.useState(5);
 
@@ -43,11 +42,11 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
         <Table>      
           <TableHead>
             <TableRow>
-              <TableCell>Data de cadastro</TableCell>
-              <TableCell align="left">Nome</TableCell>
-              <TableCell align="left">Valor unitário</TableCell>
-              <TableCell align="left">Quantidade</TableCell>
-              <TableCell align="left">Valor total</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>Data de cadastro</TableCell>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}>Nome</TableCell>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}>Valor unitário</TableCell>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}>Quantidade</TableCell>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}>Valor total</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>

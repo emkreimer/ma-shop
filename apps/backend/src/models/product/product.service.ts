@@ -13,8 +13,12 @@ export class ProductsService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async findAll(userId: number): Promise<ProductDTO[]> {
-    const products: Product[] = await this.productsRepository.find();
+  async findAll(username: string): Promise<ProductDTO[]> {
+    const products: Product[] = await this.productsRepository.find({
+      where: { deleted: false },
+      relations: ['owner'],
+    });
+
     return products.map((p) =>
       plainToInstance(ProductDTO, {
         id: p.id,
@@ -22,7 +26,7 @@ export class ProductsService {
         dateCreated: p.dateCreated,
         price: p.price,
         quantity: p.quantity,
-        isEditable: p.owner ? p.owner.userId === userId : false,
+        isEditable: p.owner ? p.owner.username === username : false,
       }),
     );
   }
@@ -31,10 +35,11 @@ export class ProductsService {
     return this.productsRepository.findOne({ where: { id } });
   }
 
-  async createProduct(product: Product, userId?: number): Promise<Product> {
-    if (userId) {
+  async createProduct(product: Product, username?: string): Promise<Product> {
+    console.log(username);
+    if (username) {
       const user = await this.userRepository.findOne({
-        where: { userId },
+        where: { username },
         relations: ['products'],
       });
       this.saveProductWithOwner(product, user);

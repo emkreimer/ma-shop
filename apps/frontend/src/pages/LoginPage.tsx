@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
         setToken(token);
         navigate('/index');
       } catch (error) {
-        alert('Falha ;/');
+        alert('Falha na autenticação.');
       }
     };
 
@@ -59,7 +59,7 @@ const LoginPage: React.FC = () => {
                 </form>
 
                 <br/>
-                <span className='mt-10'>Não tem uma conta? <a href="#" className='text-secondary'>Cadastre-se.</a></span>
+                <span className='mt-10'>Não tem uma conta? <a href="/register" className='text-secondary'>Cadastre-se.</a></span>
             </div>
         </div>
     );

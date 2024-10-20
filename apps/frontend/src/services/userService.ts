@@ -1,15 +1,17 @@
-// export const getUserProfile = async (token: string) => {
-//     const response = await fetch('http://localhost:3000/api/user', {
-//       method: 'GET',
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//       },
-//     });
-  
-//     if (response.ok) {
-//       return response.json();
-//     } else {
-//       throw new Error('Unable to fetch user profile');
-//     }
-//   };
-  
+import User from "../models/User";
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const register = async (user: User): Promise<void> => {
+  const response = await fetch(`${apiUrl}/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  response.status === 201
+    ? alert("Usuário criado com sucesso!")
+    : alert("Erro ao criar usuário");
+};
+
+export { register };

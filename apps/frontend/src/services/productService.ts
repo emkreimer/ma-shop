@@ -8,9 +8,10 @@ const newProduct: Product = {
   dateCreated: new Date().toLocaleDateString(),
   name: "",
   price: 0.0,
+  isEditable: true,
 };
 
-const createProduct = async (product: Product): Promise<Product> => {
+const createProduct = async (product: Product): Promise<Product | null> => {
   if (validateProduct(product)) {
     const response = await fetch(`${apiUrl}/product`, {
       method: "POST",
@@ -23,6 +24,7 @@ const createProduct = async (product: Product): Promise<Product> => {
     return response.json();
   } else {
     alert("Preencha todos os campos");
+    return null;
   }
 };
 

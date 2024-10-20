@@ -1,5 +1,6 @@
+const apiUrl = import.meta.env.VITE_API_URL;
 const login = async (username: string, password: string) => {
-  const response = await fetch("/api/auth/login", {
+  const response = await fetch(`${apiUrl}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -7,9 +8,11 @@ const login = async (username: string, password: string) => {
     body: JSON.stringify({ username, password }),
   });
 
-  console.log(response);
   if (response.ok) {
-    return response.json();
+    const data = await response.json();
+    console.log(data.access_token);
+    localStorage.setItem("token", data.access_token);
+    return data.access_token;
   } else {
     throw new Error("Usuário ou senha inválidos.");
   }

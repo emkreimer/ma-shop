@@ -17,8 +17,10 @@ export class UsersService {
     return this.usersRepository.findAndCount();
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { username } });
+  async findOne(username: string): Promise<User | null> {
+    return await this.usersRepository.findOne({
+      where: { username, deleted: false },
+    });
   }
 
   async createUser(user: User): Promise<User> {
@@ -45,7 +47,6 @@ export class UsersService {
 
   async validateNewUser(username: string): Promise<boolean> {
     const user = await this.findOne(username);
-    console.log(user === undefined);
-    return user === undefined;
+    return user === null;
   }
 }

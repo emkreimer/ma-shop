@@ -19,6 +19,6 @@ export class User {
   @OneToMany(() => Product, (product) => product.owner)
   products: Product[];
 
-  @Column()
+  @Column({ default: false })
   deleted: boolean;
 }

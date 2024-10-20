@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Product } from './product.entity';
+import { ProductDTO } from './dto/product.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class ProductsService {
@@ -11,8 +13,18 @@ export class ProductsService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+  async findAll(userId: number): Promise<ProductDTO[]> {
+    const products: Product[] = await this.productsRepository.find();
+    return products.map((p) =>
+      plainToInstance(ProductDTO, {
+        id: p.id,
+        name: p.name,
+        dateCreated: p.dateCreated,
+        price: p.price,
+        quantity: p.quantity,
+        isEditable: p.owner ? p.owner.userId === userId : false,
+      }),
+    );
   }
 
   async findOne(id: number): Promise<Product> {
@@ -51,11 +63,6 @@ export class ProductsService {
       return this.productsRepository.find({ where: { owner: user } });
     }
   }
-
-  // async createProduct(product: Product): Promise<Product> {
-  //   const newProduct = this.productsRepository.create(product);
-  //   return this.productsRepository.save(newProduct);
-  // }
 
   async updateProduct(p: Product): Promise<Product> {
     let product = await this.findOne(p.id);

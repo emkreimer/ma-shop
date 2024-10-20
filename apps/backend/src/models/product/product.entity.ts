@@ -15,9 +15,12 @@ export class Product {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
+  @Column({ default: 1 })
+  quantity: number;
+
   @ManyToOne(() => User, (user) => user.products)
   owner: User;
 
-  @Column()
+  @Column({ default: false })
   deleted: boolean;
 }

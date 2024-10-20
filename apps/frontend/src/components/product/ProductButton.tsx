@@ -15,7 +15,7 @@ const ProductButton: React.FC<ProductButtonProps> = ({ edicao, onClick }) => {
         return (
             <button 
                 onClick={onClick}
-                className="ml-4 my-10 rounded p-3 bg-secondary opacity-90 hover:opacity-100 text-white" 
+                className="ml-4 mb-10 mt-5 rounded p-3 bg-secondary opacity-90 hover:opacity-100 text-white" 
                 >+ Cadastrar novo produto
             </button>
         );

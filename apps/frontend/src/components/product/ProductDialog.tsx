@@ -87,7 +87,7 @@ const handleSubmit = async () => {
                     <div className='mt-5'>
                         <label className="block mb-2">Valor</label>
                         <input 
-                            type="text" 
+                            type="number" 
                             name='price'
                             value={product.price}
                             onChange={handleProductChange}

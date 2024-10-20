@@ -6,9 +6,10 @@ import Product from '../../models/Product';
 
 interface ProductDialogProps {
     p: Product | null;
+    permissao: boolean;
   }
 
-const ProductDialog: React.FC<ProductDialogProps> = ({p}) => {
+const ProductDialog: React.FC<ProductDialogProps> = ({p, permissao}) => {
     const [product, setProduct] = useState<Product>(p ? p : newProduct)
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
@@ -29,17 +30,13 @@ const handleProductChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   };
 
 const handleSubmit = async () => {
-    if (p) {
-        await updateProduct(product);
-    } else {
-        await createProduct(product);
-    }
+    p ? await updateProduct(product) : await createProduct(product);
     setOpen(false);
 };
 
     return (
         <Fragment>
-            <ProductButton edicao={!!p} onClick={handleClickOpen}/>
+            <ProductButton permissao={permissao} edicao={!!p} onClick={handleClickOpen}/>
             <Dialog 
                 open={open}
                 onClose={handleClose}

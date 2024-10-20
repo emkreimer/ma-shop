@@ -5,9 +5,10 @@ import Product from '../../models/Product';
 
 interface ProductDialogProps {
     p: Product;
+    permissao: boolean;
   }
 
-const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p}) => {
+const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p, permissao}) => {
     const [product, setProduct] = useState<Product>(p)
     const [open, setOpen] = useState(false);
     const handleClickOpen = () => {
@@ -20,7 +21,7 @@ const ProductDeleteDialog: React.FC<ProductDialogProps> = ({p}) => {
 
     return (
         <Fragment>
-            <button onClick={handleClickOpen}>
+            <button onClick={handleClickOpen} disabled={!permissao}>
                 <DeleteOutlineIcon color='error' />
             </button>
             <Dialog 

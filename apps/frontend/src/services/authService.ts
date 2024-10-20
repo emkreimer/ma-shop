@@ -1,4 +1,7 @@
+import { jwtDecode, JwtPayload } from "jwt-decode"; // Import JwtPayload type
+
 const apiUrl = import.meta.env.VITE_API_URL;
+
 const login = async (username: string, password: string) => {
   const response = await fetch(`${apiUrl}/auth/login`, {
     method: "POST",
@@ -10,9 +13,14 @@ const login = async (username: string, password: string) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data.access_token);
-    localStorage.setItem("token", data.access_token);
-    return data.access_token;
+    const access_token = data.access_token;
+
+    const decodedToken: JwtPayload = jwtDecode(access_token);
+    const userRole = decodedToken.role;
+
+    localStorage.setItem("token", access_token);
+    localStorage.setItem("permissao", userRole);
+    return access_token;
   } else {
     throw new Error("Usuário ou senha inválidos.");
   }

@@ -9,6 +9,8 @@ interface ProductTableProps {
   products: Product[]; 
 }
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
+  const permissao = localStorage.getItem('permissao');
+  console.log(permissao);
   const [page, setPage] = React.useState(0);
   const [productsPerPage, setProductsPerPage] = React.useState(5);
 
@@ -61,8 +63,8 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
                 <TableCell align="left">R$ {p.quantity ? p.quantity * p.price : p.price}</TableCell>
                 <TableCell align="left">
                     <div className='flex flex-row gap-x-3'>
-                      <ProductDialog p={p}/>
-                      <ProductDeleteDialog p={p}/>          
+                      <ProductDialog p={p} permissao={(p.isEditable || permissao === 'admin') ? true : false}/>
+                      <ProductDeleteDialog p={p} permissao={(p.isEditable || permissao === 'admin') ? true : false}/>          
                     </div>
                 </TableCell>
 

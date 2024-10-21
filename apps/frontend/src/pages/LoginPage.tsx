@@ -24,9 +24,9 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="flex h-full justify-center">
-            <div className="hidden lg:flex flex-1 h-screen bg-secondary text-white flex flex-col text-center m-0 p-14">
-                <h1 className="text-4xl">Bem-vindo!</h1>
-                <h2 className="text-3xl my-5 pb-10">SISTEMA GERENCIAL TXAI</h2>
+            <div className="hidden lg:flex flex-1 min-h-screen bg-secondary text-white flex flex-col text-center m-0 p-14">
+                <h1 className="text-4xl font-bold">Bem-vindo!</h1>
+                <h2 className="text-3xl my-5 pb-10 font-bold">SISTEMA GERENCIAL TXAI</h2>
                 <img src={logo} alt="Logo" />
             </div>
             <div className="flex-1 flex-col bg-primary flex justify-center items-center p-1 m-0">

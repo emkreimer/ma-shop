@@ -1,19 +1,25 @@
-FROM node:16-alpine
+FROM node:16-alpine AS builder
 
-# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json first
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the app's source code
 COPY . .
 
-# Expose the port
+RUN npm run build
+
+
+FROM node:16-alpine
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/package*.json ./
+
+RUN npm install --only=production
+
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+CMD ["node", "dist/main"]

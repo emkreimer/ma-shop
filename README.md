@@ -1,3 +1,10 @@
+## Demo
+
+A aplicação está disponível no endereço `https://ma-shop-frontend.vercel.app/`.
+
+Existe o user `admin-master` com permissão de administrador e senha `123456789@`,
+e o user `user-normal` com permissão comum e senha `123456`.
+
 ## Pré-requisitos
 
 - [Docker](https://www.docker.com/get-started)

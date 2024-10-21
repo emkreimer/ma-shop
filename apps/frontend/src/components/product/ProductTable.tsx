@@ -1,5 +1,7 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import React, { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, 
+  TableHead, TableRow, Paper, TablePagination, 
+  TableSortLabel } from '@mui/material';
 
 import ProductDialog from './ProductDialog';
 import ProductDeleteDialog from './ProductDeleteDialog';
@@ -8,10 +10,16 @@ import Product from '../../models/Product';
 interface ProductTableProps {
   products: Product[]; 
 }
+
+type Order = 'asc' | 'desc';
+
 const ProductTable: React.FC<ProductTableProps> = ({products}) => {
   const permissao = localStorage.getItem('permissao');
-  const [page, setPage] = React.useState(0);
-  const [productsPerPage, setProductsPerPage] = React.useState(5);
+
+  const [page, setPage] = useState(0);
+  const [productsPerPage, setProductsPerPage] = useState(5);
+  const [orderBy, setOrderBy] = useState<'name' | 'dateCreated'>('name');
+  const [order, setOrder] = useState<Order>('asc'); 
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -26,6 +34,24 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
     setProductsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
+
+  const handleRequestSort = (property: 'name' | 'dateCreated') => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedProducts = [...products].sort((a, b) => {
+    if (orderBy === 'name') {
+      return order === 'asc'
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name);
+    } else {
+      const dateA = new Date(a.dateCreated).getTime();
+      const dateB = new Date(b.dateCreated).getTime();
+      return order === 'asc' ? dateA - dateB : dateB - dateA;
+    }
+  });
 
   const formatDate = (date: string) => {
     if (date.charAt(4) === '-') {
@@ -51,8 +77,24 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
         <Table>      
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Data de cadastro</TableCell>
-              <TableCell align="left" sx={{ fontWeight: 'bold' }}>Nome</TableCell>
+              <TableCell sx={{ fontWeight: 'bold' }}>
+              <TableSortLabel
+                  active={orderBy === 'dateCreated'}
+                  direction={orderBy === 'dateCreated' ? order : 'asc'}
+                  onClick={() => handleRequestSort('dateCreated')}
+                >
+                  Data de cadastro
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="left" sx={{ fontWeight: 'bold' }}>
+                <TableSortLabel
+                  active={orderBy === 'name'}
+                  direction={orderBy === 'name' ? order : 'asc'}
+                  onClick={() => handleRequestSort('name')}
+                >
+                  Nome
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="left" sx={{ fontWeight: 'bold' }}>Valor unitário</TableCell>
               <TableCell align="left" sx={{ fontWeight: 'bold' }}>Quantidade</TableCell>
               <TableCell align="left" sx={{ fontWeight: 'bold' }}>Valor total</TableCell>
@@ -60,7 +102,7 @@ const ProductTable: React.FC<ProductTableProps> = ({products}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {( productsPerPage > 0 ? products.slice(page * productsPerPage, page * productsPerPage + productsPerPage) : products).map((p) => ((
+            {( productsPerPage > 0 ? sortedProducts.slice(page * productsPerPage, page * productsPerPage + productsPerPage) : sortedProducts).map((p) => ((
               <TableRow
                 key={p.id}
               >

@@ -5,6 +5,8 @@ A aplicação está disponível no endereço `https://ma-shop-frontend.vercel.ap
 Existe o user `admin-master` com permissão de administrador e senha `123456789@`,
 e o user `user-normal` com permissão comum e senha `123456`.
 
+Obs.: O backend está hospedado no onrender. As primeiras requisições após um período de inatividade podem demorar! 
+
 ## Pré-requisitos
 
 - [Docker](https://www.docker.com/get-started)

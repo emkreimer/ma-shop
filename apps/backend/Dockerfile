@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --include=dev
 
 COPY . .
 
@@ -18,7 +18,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package*.json ./
 
-RUN npm install --include=dev
+RUN npm install --only=production
 
 EXPOSE 3000
 
